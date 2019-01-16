@@ -1,4 +1,4 @@
-all: libivalarith.a
+all: libivalarith.a driver
 
 parser.c parser.h:	parser.y
 	bison -d parser.y -o parser.h -o parser.c
@@ -11,6 +11,9 @@ xmalloc.o: xmalloc.c
 
 error.o: error.c
 	gcc -c -DSTDC_HEADERS error.c
+
+node.o: node.c
+	gcc -c -DSTDC_HEADERS node.c
 
 xmath.o: xmath.c
 	gcc -c -DSTDC_HEADERS -DHAVE_MATH_H xmath.c -lm
@@ -38,7 +41,7 @@ driver: libivalarith.a driver.c
 	gcc -DSTDC_HEADERS -DHAVE_MATH_H -o driver driver.c libivalarith.a -lfl -lm -lmpfi -lmpfr
 
 deepclean:
-	rm lex.yy.c parser.c parser.h *.o *.a
+	rm lex.yy.c parser.c parser.h *.o *.a driver
 
 clean:
 	rm libivalarith.a
